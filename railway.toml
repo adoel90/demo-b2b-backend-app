@@ -1,24 +1,8 @@
-
-
 [build]
-setup = [
-  "nodejs_22, yarn-1_x"
-]
+# Tidak perlu build ulang, cukup install dependency dari hasil `medusa build`
+command = "cd .medusa/server && npm install --omit=dev --force"
 
-[install] = [
-  "npm install -g corepack@0.24.1 && corepack enable",
-  "yarn install --check-cache"
-]
 
-[node:install] = [
-  "npm install -g corepack@0.24.1 && corepack enable",
-  "yarn install --check-cache"
-]
-
-[build] = [
-  "cd .medusa/server && yarn install --omit=dev --force"
-]
-
-[start] = [
-  "npm run predeploy && npm run start"
-]
+[deploy]
+# Jalankan server yang sudah ter-bundle
+start = "cd .medusa/server && npm run predeploy && npm run start"
