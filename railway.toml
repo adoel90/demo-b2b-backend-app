@@ -1,5 +1,7 @@
 [build]
 # Tidak perlu build ulang, cukup install dependency dari hasil `medusa build`
+builder = "NIXPACKS"   # atau "DOCKERFILE" tergantung setup kamu
+buildCmd = "echo 'skip build phase'"  # command dummy
 command = "cd .medusa/server && npm install --omit=dev --force"
 
 
