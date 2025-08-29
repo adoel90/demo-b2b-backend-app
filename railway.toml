@@ -1,10 +1,33 @@
-[build]
+#[build]
 # Tidak perlu build ulang, cukup install dependency dari hasil `medusa build`
-builder = "NIXPACKS"   # atau "DOCKERFILE" tergantung setup kamu
-buildCmd = "echo 'skip build phase'"  # command dummy
-command = "cd .medusa/server && npm install --omit=dev --force"
+#builder = "NIXPACKS"   # atau "DOCKERFILE" tergantung setup kamu
+#buildCmd = "echo 'skip build phase'"  # command dummy
+#command = "cd .medusa/server && npm install --omit=dev --force"
 
 
-[deploy]
+#[deploy]
 # Jalankan server yang sudah ter-bundle
-start = "cd .medusa/server && npm run predeploy && npm run start"
+#start = "cd .medusa/server && npm run predeploy && npm run start"
+
+[build]
+setup = [
+  "nodejs_22, yarn-1_x"
+]
+
+install = [
+  "npm install -g corepack@0.24.1 && corepack enable",
+  "yarn install --check-cache"
+]
+
+node:install = [
+  "npm install -g corepack@0.24.1 && corepack enable",
+  "yarn install --check-cache"
+]
+
+build = [
+  "cd .medusa/server && yarn install --omit=dev --force"
+]
+
+start = [
+  "npm run predeploy && npm run start"
+]
