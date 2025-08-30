@@ -62,5 +62,13 @@ module.exports = defineConfig({
         redisUrl: process.env.REDIS_URL,
       },
     },
+    
   },
+
+    plugins: [
+    {
+      resolve: "@medusajs/draft-order",
+      options: {},
+    },
+  ],
 });

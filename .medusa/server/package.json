@@ -26,6 +26,7 @@
     "@medusajs/admin-sdk": "^2.9.0",
     "@medusajs/auth": "^2.9.0",
     "@medusajs/cli": "^2.9.0",
+    "@medusajs/draft-order": "^2.10.1",
     "@medusajs/framework": "^2.9.0",
     "@medusajs/js-sdk": "^2.9.0",
     "@medusajs/medusa": "^2.9.0",
