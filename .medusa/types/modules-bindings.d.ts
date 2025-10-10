@@ -13,6 +13,7 @@ import type { ITaxModuleService } from '@medusajs/framework/types'
 import type { ICurrencyModuleService } from '@medusajs/framework/types'
 import type { IPaymentModuleService } from '@medusajs/framework/types'
 import type { IOrderModuleService } from '@medusajs/framework/types'
+import type Settings from '@medusajs/medusa/settings'
 import type { IAuthModuleService } from '@medusajs/framework/types'
 import type { IUserModuleService } from '@medusajs/framework/types'
 import type { IFulfillmentModuleService } from '@medusajs/framework/types'
@@ -43,6 +44,7 @@ declare module '@medusajs/framework/types' {
     'currency': ICurrencyModuleService,
     'payment': IPaymentModuleService,
     'order': IOrderModuleService,
+    'settings': InstanceType<(typeof Settings)['service']>,
     'auth': IAuthModuleService,
     'user': IUserModuleService,
     'fulfillment': IFulfillmentModuleService,

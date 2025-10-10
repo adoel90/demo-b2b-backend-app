@@ -1,9 +1,11 @@
 import { QUOTE_MODULE } from "./src/modules/quote";
 import { APPROVAL_MODULE } from "./src/modules/approval";
 import { COMPANY_MODULE } from "./src/modules/company";
+import { STATIC_MODULE } from "./src/modules/staticserver";
 import { loadEnv, defineConfig, Modules, ContainerRegistrationKeys} from "@medusajs/framework/utils";
 
-
+import path from "path"
+import express from "express"
 
 loadEnv(process.env.NODE_ENV!, process.cwd());
 
@@ -51,8 +53,16 @@ module.exports = defineConfig({
       resolve: "./modules/approval",
     },
     [Modules.CACHE]: {
-      resolve: "@medusajs/medusa/cache-inmemory",
+          
+            // resolve: "@medusajs/medusa/cache-inmemory",          
+      resolve: "@medusajs/medusa/cache-redis",
+      options: {
+        redisUrl: process.env.REDIS_URL,
+      },
+
+       
     },
+    
     [Modules.WORKFLOW_ENGINE]: {
       resolve: "@medusajs/medusa/workflow-engine-inmemory",
     },
@@ -62,6 +72,51 @@ module.exports = defineConfig({
         redisUrl: process.env.REDIS_URL,
       },
     },
+    // [Modules.FILE]: {
+    //   resolve: "@medusajs/medusa/file",      
+    //   options: {
+    //      providers: [
+    //       {
+    //         resolve: "./src/modules/cloudinary-file",
+    //         id: "cloudinary",
+    //         options: {
+    //           cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    //           api_key: process.env.CLOUDINARY_API_KEY,
+    //           api_secret: process.env.CLOUDINARY_API_SECRET,
+    //           secure: true,
+    //           folder: "medusa-uploads"
+    //         },
+    //       }, 
+    //     ],
+    //   }
+    // }
+    [Modules.FILE]: {
+      resolve: "@medusajs/medusa/file",
+      options: {
+            providers: [
+      {
+        // resolve: "@jaykanjia/medusa-file-cloudinary/providers/file-cloudinary",
+        // id: "cloudinary",
+        // options: {
+        //   apiKey: process.env.CLOUDINARY_API_KEY,
+        //   apiSecret: process.env.CLOUDINARY_API_SECRET,
+        //   cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+        //   folderName: "medusa", // optional, defaults to root
+        //   secure: true,         // optional, defaults to true
+        // },
+          resolve: "@medusajs/medusa/file-local",
+            id: "local",
+            options: {
+              uploadDir: "static", // folder tempat file disimpan
+              baseUrl: "http://localhost:9000", // base URL untuk akses file
+            },
+      },
+    ],
+      }
+    },
+    // [STATIC_MODULE]: {
+    //   resolve: "./modules/staticserver",  // ⬅️ Path ke module custom
+    // },
     
   },
 
@@ -70,5 +125,20 @@ module.exports = defineConfig({
       resolve: "@medusajs/draft-order",
       options: {},
     },
+        // {
+        //   resolve: `@jaykanjia/medusa-file-cloudinary`,
+        //   options: {
+        //     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+        //     api_key: process.env.CLOUDINARY_API_KEY,
+        //     api_secret: process.env.CLOUDINARY_API_SECRET,
+        //     secure: false,
+        //   },
+        // },
   ],
 });
+
+
+export default async function ({ app }) {
+  const staticPath = path.resolve("./static")
+  app.use("/static", express.static(staticPath))
+}
