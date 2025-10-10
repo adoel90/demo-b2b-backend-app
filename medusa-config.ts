@@ -54,11 +54,11 @@ module.exports = defineConfig({
     },
     [Modules.CACHE]: {
           
-            // resolve: "@medusajs/medusa/cache-inmemory",          
-      resolve: "@medusajs/medusa/cache-redis",
-      options: {
-        redisUrl: process.env.REDIS_URL,
-      },
+            resolve: "@medusajs/medusa/cache-inmemory",          
+      // resolve: "@medusajs/medusa/cache-redis",
+      // options: {
+      //   redisUrl: process.env.REDIS_URL,
+      // },
 
        
     },
