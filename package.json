@@ -61,7 +61,10 @@
     "vite": "^5.2.11"
   },
   "engines": {
+    "npm": ">=10.8.0",
     "node": ">=20"
+    
+
   },
   "packageManager": "yarn@4.4.0"
 }
